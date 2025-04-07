@@ -1,0 +1,236 @@
+#include <iostream>
+#include <vector>
+#include <algorithm>
+
+using namespace std;
+
+// Llenar un vector con valores diferentes
+void llenarVector(vector<int>& vector, int tamaño) {
+    vector.clear();
+    int valor;
+    for (int i = 0; i < tamaño; i++) {
+        bool repetido;
+        do {
+            repetido = false;
+            cout << "Valor " << i + 1 << ": ";
+            cin >> valor;
+            for (int j = 0; j < vector.size(); j++) {
+                if (vector[j] == valor) {
+                    cout << "Valor repetido. Ingrese uno diferente.\n";
+                    repetido = true;
+                    break;
+                }
+            }
+        } while (repetido);
+        vector.push_back(valor);
+    }
+    cout << endl;
+}
+
+// Llenar un vector sin restricciones
+void llenarVectorNormal(vector<int>& vector, int tamaño) {
+    vector.clear();
+    int valor;
+    for (int i = 0; i < tamaño; i++) {
+        cout << "Valor " << i + 1 << ": ";
+        cin >> valor;
+        vector.push_back(valor);
+    }
+    cout << endl;
+}
+
+// Sumar dos vectores
+void sumarVectores(const vector<int>& a, const vector<int>& b) {
+    if (a.size() != b.size()) {
+        cout << "Los vectores deben tener el mismo tamaño.\n";
+        return;
+    }
+
+    vector<int> suma;
+
+    cout << "\n--- SUMA DE VECTORES ---\n";
+    cout << "Vector 1: [";
+    for (size_t i = 0; i < a.size(); i++) {
+        cout << a[i];
+        if (i != a.size() - 1) cout << ", ";
+    }
+    cout << "]\n";
+
+    cout << "Vector 2: [";
+    for (size_t i = 0; i < b.size(); i++) {
+        cout << b[i];
+        if (i != b.size() - 1) cout << ", ";
+    }
+    cout << "]\n";
+
+    cout << "Vector Suma: [";
+    for (size_t i = 0; i < a.size(); i++) {
+        int resultado = a[i] + b[i];
+        suma.push_back(resultado);
+        cout << resultado;
+        if (i != a.size() - 1) cout << ", ";
+    }
+    cout << "]\n\n";
+}
+
+// Invertir un vector
+void invertirVector(vector<int>& vector) {
+    cout << "\n--- INVERTIR VECTOR ---\n";
+    cout << "Vector original: [";
+    for (size_t i = 0; i < vector.size(); i++) {
+        cout << vector[i];
+        if (i != vector.size() - 1) cout << ", ";
+    }
+    cout << "]\n";
+
+    reverse(vector.begin(), vector.end());
+
+    cout << "Vector invertido: [";
+    for (size_t i = 0; i < vector.size(); i++) {
+        cout << vector[i];
+        if (i != vector.size() - 1) cout << ", ";
+    }
+    cout << "]\n\n";
+}
+
+// Buscar un valor específico
+void buscarValor(const vector<int>& vector, int valor) {
+    cout << "\n--- BUSCAR VALOR ---\n";
+    cout << "Vector original: [";
+    for (size_t i = 0; i < vector.size(); i++) {
+        cout << vector[i];
+        if (i != vector.size() - 1) cout << ", ";
+    }
+    cout << "]\n";
+
+    bool encontrado = false;
+    cout << "\nEl valor " << valor << " se encuentra en la(s) posición(es): ";
+    for (size_t i = 0; i < vector.size(); i++) {
+        if (vector[i] == valor) {
+            cout << i << " ";
+            encontrado = true;
+        }
+    }
+
+    if (!encontrado) {
+        cout << "\nValor no encontrado en el vector.";
+    }
+
+    cout << "\n" << endl;
+}
+
+// Estadísticas: promedio, mínimo, máximo
+void estadisticasVector(const vector<int>& vector) {
+    cout << "\n--- ESTADÍSTICAS DEL VECTOR ---\n";
+    if (vector.empty()) return;
+    int suma = 0, minimo = vector[0], maximo = vector[0];
+    for (int val : vector) {
+        suma += val;
+        if (val < minimo) minimo = val;
+        if (val > maximo) maximo = val;
+    }
+    double promedio = (double)suma / vector.size();
+    cout << "Promedio del vector: " << promedio << endl;
+    cout << "Número mínimo: " << minimo << endl;
+    cout << "Número máximo: " << maximo << "\n" << endl;
+}
+
+// Ordenar vector
+void ordenarVector(vector<int>& vector) {
+    cout << "\n--- ORDENAR VECTOR ---\n";
+    cout << "Vector original: [";
+    for (size_t i = 0; i < vector.size(); i++) {
+        cout << vector[i];
+        if (i != vector.size() - 1) cout << ", ";
+    }
+    cout << "]\n";
+
+    sort(vector.begin(), vector.end());
+
+    cout << "Vector ordenado: [";
+    for (size_t i = 0; i < vector.size(); i++) {
+        cout << vector[i];
+        if (i != vector.size() - 1) cout << ", ";
+    }
+    cout << "]\n\n";
+}
+
+// Menú principal
+int main() {
+    vector<int> vector1, vector2;
+    int opcion, tamaño, valor;
+
+    do {
+        cout << "\n--- MENÚ PRINCIPAL ---\n";
+        cout << "1. Sumar dos vectores\n";
+        cout << "2. Invertir valores de un vector\n";
+        cout << "3. Llenar un vector con valores diferentes\n";
+        cout << "4. Buscar valor específico en un vector\n";
+        cout << "5. Promedio, minimo y maximo de un vector\n";
+        cout << "6. Ordenar vector\n";
+        cout << "7. Salir\n";
+        cout << "Seleccione una opción: ";
+        cin >> opcion;
+
+        switch (opcion) {
+            case 1:
+                cout << "\nTamaño de los vectores: ";
+                cin >> tamaño;
+                cout << "\nLlenar primer vector:\n";
+                llenarVectorNormal(vector1, tamaño);
+                cout << "\nLlenar segundo vector:\n";
+                llenarVectorNormal(vector2, tamaño);
+                sumarVectores(vector1, vector2);
+                break;
+            case 2:
+                cout << "\nTamaño del vector: ";
+                cin >> tamaño;
+                cout << "\nLlenando vector...\n";
+                llenarVector(vector1, tamaño);
+                invertirVector(vector1);
+                break;
+            case 3:
+                cout << "\nTamaño del vector: ";
+                cin >> tamaño;
+                cout << "\nLlenando vector con valores diferentes...\n";
+                llenarVector(vector1, tamaño);
+                cout << "Vector final: [";
+                for (size_t i = 0; i < vector1.size(); i++) {
+                    cout << vector1[i];
+                    if (i != vector1.size() - 1) cout << ", ";
+                }
+                cout << "]\n\n";
+                break;
+            case 4:
+                cout << "\nTamaño del vector: ";
+                cin >> tamaño;
+                cout << "\nLlenando vector...\n";
+                llenarVectorNormal(vector1, tamaño);
+                cout << "\nValor a buscar: ";
+                cin >> valor;
+                buscarValor(vector1, valor);
+                break;
+            case 5:
+                cout << "\nTamaño del vector: ";
+                cin >> tamaño;
+                cout << "\nLlenando vector...\n";
+                llenarVectorNormal(vector1, tamaño);
+                estadisticasVector(vector1);
+                break;
+            case 6:
+                cout << "\nTamaño del vector: ";
+                cin >> tamaño;
+                cout << "\nLlenando vector...\n";
+                llenarVectorNormal(vector1, tamaño);
+                ordenarVector(vector1);
+                break;
+            case 7:
+                cout << "\nSaliendo del programa...\n";
+                break;
+            default:
+                cout << "\nOpción inválida. Intente de nuevo.\n";
+        }
+    } while (opcion != 7);
+
+    return 0;
+}
